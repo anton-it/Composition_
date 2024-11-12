@@ -12,7 +12,7 @@ class GenerateQuestionsUseCase(
     //поэтому с помощью переопределения operator fun invoke далее мы можем вызвать этот класс как метод
 
     operator fun invoke(maxSumValue: Int): Question {
-        return repository.generateQuestions(maxSumValue, COUNT_OF_OPTIONS)
+        return repository.generateQuestion(maxSumValue, COUNT_OF_OPTIONS)
     }
 
     private companion object {

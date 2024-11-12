@@ -6,7 +6,7 @@ import com.example.composition.domain.entity.Question
 
 interface GameRepository {
 
-    fun generateQuestions(
+    fun generateQuestion(
         maxSumValue: Int, //макс значение которое нужно сгенерировать в поле сумаа
         countOfOptions: Int //сколько генерировать правильных ответов
     ): Question
