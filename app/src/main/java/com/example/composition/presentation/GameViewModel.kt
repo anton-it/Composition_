@@ -3,6 +3,7 @@ package com.example.composition.presentation
 import android.annotation.SuppressLint
 import android.app.Application
 import android.os.CountDownTimer
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -69,6 +70,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         getGameSettings(level)
         startTimer()
         generateQuestion()
+        updateProgress()
     }
 
     fun chooseAnswer(number: Int) {
@@ -77,9 +79,10 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         generateQuestion()
     }
 
-    @SuppressLint("StringFormatMatches")
     private fun updateProgress() {
+        Log.d("MyLog111", "updateProgress")
         val percent = calculatePercentRightAnswers()
+        Log.d("MyLog111", percent.toString())
         _percentOfRightAnswers.value = percent
         _progressAnswers.value = String.format(
             context.resources.getString(R.string.progress_answers),
@@ -91,6 +94,9 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun calculatePercentRightAnswers(): Int {
+        if (countOfQuestions == 0) {
+            return 0
+        }
         return ((countOfRightAnswers / countOfQuestions.toDouble()) * 100).toInt()
     }
 
@@ -146,7 +152,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     private fun formatTime(millis: Long): String {
         val seconds = millis / MILES_IN_SECONDS
         val minutes = seconds / SECONDS_IN_MINUTES
-        val leftSeconds = seconds - (millis * SECONDS_IN_MINUTES)
+        val leftSeconds = seconds - (minutes * SECONDS_IN_MINUTES)
         return String.format("%02d:%02d", minutes, leftSeconds)
     }
 
