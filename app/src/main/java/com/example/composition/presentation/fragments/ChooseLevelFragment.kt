@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.composition.R
 import com.example.composition.databinding.FragmentChooseLevelBinding
 import com.example.composition.databinding.FragmentGameFinishedBinding
 import com.example.composition.domain.entity.Level
+import com.example.composition.presentation.fragments.GameFragment.Companion.KEY_LEVEL
 
 class ChooseLevelFragment : Fragment() {
 
@@ -44,10 +46,13 @@ class ChooseLevelFragment : Fragment() {
     }
 
     private fun launchGameFragment(level: Level) {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container, GameFragment.newInstance(level))
-            .addToBackStack(GameFragment.NAME)
-            .commit()
+        findNavController().navigate(
+            ChooseLevelFragmentDirections.actionChooseLevelFragmentToGameFragment(level)
+        )
+//        requireActivity().supportFragmentManager.beginTransaction()
+//            .replace(R.id.main_container, GameFragment.newInstance(level))
+//            .addToBackStack(GameFragment.NAME)
+//            .commit()
     }
 
     override fun onDestroy() {
